@@ -6,9 +6,12 @@
 #
 
 library(shiny)
+<<<<<<< HEAD
 source("source.R")
 
 
+=======
+>>>>>>> 5958f6d2f6437bfe01074d238654e7f7a2aa2af4
 
 shinyServer(function(input, output) {
 
@@ -22,6 +25,9 @@ shinyServer(function(input, output) {
     hist(x, breaks = bins, col = 'darkgray', border = 'white')
 
   })
+<<<<<<< HEAD
   
+=======
+>>>>>>> 5958f6d2f6437bfe01074d238654e7f7a2aa2af4
 
 })
