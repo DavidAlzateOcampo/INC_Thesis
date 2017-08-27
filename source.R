@@ -51,8 +51,7 @@ print.tab.Stats.col1<-function(){
     box(title = "Box title"
         , "Box content"
         , width = 2
-    )
-  )
+    )  )
 }
 print.tab.Stats.col2<-function(){
   fluidRow(
