@@ -47,9 +47,10 @@ print.dashboard.Body<-function(){
 }
 print.tab.Stats.col1<-function(){
   fluidRow(
-    box(plotOutput("distPlot")),
+    box(plotOutput("distPlot"),width = 8),
     box(title = "Box title"
-        , "Box content"
+        , background = "light-blue"
+        ,"A box with a solid light-blue background"
         , width = 2
     )  )
 }
