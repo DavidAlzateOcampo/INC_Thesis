@@ -10,10 +10,54 @@ print.Plot.ini<-function(){
                   min = 1,
                   max = 50,
                   value = 30)
+    ),
+    # Show a plot of the generated distribution
+    mainPanel(
+      plotOutput("distPlot")
+    )
+  )
+}
+print.dashboard.main.side<-function(){
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem("Estadísticas", tabName = "stats", icon = icon("bar-chart-o")),
+      menuItem("Widgets", tabName = "widgets", icon = icon("th"))
+    )
+  )
+}
+
+
+print.dashboard.Body<-function(){
+  dashboardBody(
+    tabItems(
+      # First tab content
+      tabItem(tabName = "stats"
+              ,print.tab.Stats.col1()
+              ,hr()
+              ,print.tab.Stats.col2()
+              
       ),
-      # Show a plot of the generated distribution
-      mainPanel(
-        plotOutput("distPlot")
+      
+      # Second tab content
+      tabItem(tabName = "widgets",
+              h2("Widgets tab content")
       )
     )
+  )
+}
+print.tab.Stats.col1<-function(){
+  fluidRow(
+    box(plotOutput("distPlot")),
+    box(title = "Box title"
+        , "Box content"
+        , width = 2
+    )
+  )
+}
+print.tab.Stats.col2<-function(){
+  fluidRow(
+    box(
+      title = "Controls"
+      ,sliderInput("bins", "Number of observations:", 1, 100, 50))
+  )
 }
