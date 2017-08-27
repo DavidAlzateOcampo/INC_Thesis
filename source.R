@@ -20,11 +20,16 @@ print.Plot.ini<-function(){
 print.dashboard.main.side<-function(){
   dashboardSidebar(
     sidebarMenu(
-      menuItem("Estadísticas", tabName = "stats", icon = icon("bar-chart-o")),
+      menuItem(label.Stats.Title, icon = icon(icon.Stats),
+               menuSubItem(label.Stats.subItem1, tabName = "stats"),
+               menuSubItem(label.Stats.subItem2, tabName = "subitem2")),
       menuItem("Widgets", tabName = "widgets", icon = icon("th"))
     )
   )
 }
+
+#menuSubItem("Sub-item 1", tabName = "subitem1"),
+#menuSubItem("Sub-item 2", tabName = "subitem2")
 
 
 print.dashboard.Body<-function(){
@@ -49,7 +54,8 @@ print.tab.Stats.col1<-function(){
   fluidRow(
     box(plotOutput("distPlot"),width = 8),
     box(title = "Box title"
-        , background = "light-blue"
+        , solidHeader = TRUE
+        , background = color.background.box
         ,"A box with a solid light-blue background"
         , width = 2
     )  )
@@ -57,7 +63,9 @@ print.tab.Stats.col1<-function(){
 print.tab.Stats.col2<-function(){
   fluidRow(
     box(
-      title = "Controls"
+      title = label.controls
+      , solidHeader = TRUE
+      ,status = "primary"
       ,sliderInput("bins", "Number of observations:", 1, 100, 50))
   )
 }
