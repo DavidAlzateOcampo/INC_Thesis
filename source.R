@@ -66,6 +66,7 @@ print.tab.Stats.col2<-function(){
       title = label.controls
       , solidHeader = TRUE
       ,status = "primary"
+      
       ,sliderInput("bins", "Number of observations:", 1, 100, 50))
   )
 }
