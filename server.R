@@ -7,6 +7,7 @@
 
 library(shiny)
 source("source.R")
+data<-get.data.frm.csv(data.file)
 
 shinyServer(function(input, output) {
 

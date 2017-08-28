@@ -8,3 +8,6 @@ label.controls<-"Variables de control"
 color.background.box<-"light-blue"
 
 icon.Stats<-"bar-chart-o"
+icon.Stats.pie <-"pie-chart"
+
+data.file<-"risk_factors_cervical_cancer.csv"

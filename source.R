@@ -21,7 +21,7 @@ print.dashboard.main.side<-function(){
   dashboardSidebar(
     sidebarMenu(
       menuItem(label.Stats.Title, icon = icon(icon.Stats),
-               menuSubItem(label.Stats.subItem1, tabName = "stats"),
+               menuSubItem(label.Stats.subItem1, tabName = "stats",icon=icon.Stats.pie),
                menuSubItem(label.Stats.subItem2, tabName = "subitem2")),
       menuItem("Widgets", tabName = "widgets", icon = icon("th"))
     )
@@ -66,7 +66,11 @@ print.tab.Stats.col2<-function(){
       title = label.controls
       , solidHeader = TRUE
       ,status = "primary"
-      
       ,sliderInput("bins", "Number of observations:", 1, 100, 50))
   )
 }
+
+get.data.frm.csv<-function(fileName){
+  cat(fileName)
+  return(read.csv(fileName,header = T))
+  }
