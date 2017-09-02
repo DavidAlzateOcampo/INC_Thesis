@@ -6,10 +6,12 @@
 #
 
 library(shiny)
-source("source.R")
+source("UI_fld_names.R")
 data<-get.data.frm.csv(data.file)
+source("source.R")
 
-shinyServer(function(input, output) {
+
+shinyServer<-function(input, output) {
 
   output$distPlot <- renderPlot({
 
@@ -21,5 +23,8 @@ shinyServer(function(input, output) {
     hist(x, breaks = bins, col = 'darkgray', border = 'white')
 
   })
-})
+  
+  # Printing dimensions that were selected.
+  output$dimension <- renderText(input$dimension)
+}
 

@@ -1,5 +1,4 @@
 # Contains the names used in User interface
-source("UI_fld_names.R")
 
 print.Plot.ini<-function(){
   # Sidebar with a slider input for number of bins
@@ -66,11 +65,82 @@ print.tab.Stats.col2<-function(){
       title = label.controls
       , solidHeader = TRUE
       ,status = "primary"
-      ,sliderInput("bins", "Number of observations:", 1, 100, 50))
+      ,sliderInput("bins", "Number of observations:", 1, 100, 50)
+      ,selectInput("dimension", label = label.nbr.dim, 
+                   choices = get.choices.dimensions(), 
+                   selected = 1),
+        print.select.input.based.dim(column(3, verbatimTextOutput("dimension")))
   )
+  )
+}
+
+print.select.input.based.dim<-function(dimSelected){
+  
+  selectInput("dimension.1", 
+              label = label.choose.first.dim, 
+              choices = names(data), 
+              selected = 1)
 }
 
 get.data.frm.csv<-function(fileName){
   cat(fileName)
-  return(read.csv(fileName,header = T))
+  return(read.csv(fileName,header = T,na.strings = c('?','n.a','NA')))
+}
+
+get.df.column.class<-function(dataIn){
+  max<-ncol(dataIn);
+  dfOut<-data.frame(Variable=NULL
+                   ,Class=NULL
+                   ,Position=NULL
+                   ,RangeMin=NULL
+                   ,RangeMax=NULL)
+  RangeMin<-NULL;
+  RangeMax<-NULL;
+  for(i in 1:max){
+    RangeMin<-NULL;
+    RangeMax<-NULL;
+    RangeMin<-getRangeMin(dataIn[,i]);
+    RangeMax<-getRangeMax(dataIn[,i]);
+    Variable<-names(dataIn)[i];
+    Class<-class(dataIn[,i]);
+    
+    dfOut<-rbind(dfOut,
+           data.frame(
+             Variable=Variable
+            ,Class=Class
+            ,Position=i
+            ,RangeMin=RangeMin
+            ,RangeMax=RangeMax
+           ))
   }
+  return(dfOut)
+}
+
+getRangeMin<-function(colVal){
+  valMin<-NULL
+  if(class(colVal)=="factor"){
+    valMin<-sort(levels(colVal))[1]
+  }else{
+    valMin<-(min(colVal,na.rm = NA))
+  }
+  return(valMin)
+}
+
+getRangeMax<-function(colVal){
+  valMax<-NULL
+  if(class(colVal)=="factor"){
+    valMax<-sort(levels(colVal))[length(colVal)]
+  }
+  else{
+    valMax<-(max(colVal,na.rm = NA))
+  }
+  return(valMax)
+}
+
+get.choices.dimensions<-function(){
+  a<-list();
+  a[[label.1.dim]]=1;
+  a[[label.2.dim]]=2;
+  return(a)
+  
+}
