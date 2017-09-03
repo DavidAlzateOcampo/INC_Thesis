@@ -51,7 +51,8 @@ print.dashboard.Body<-function(){
 }
 print.tab.Stats.col1<-function(){
   fluidRow(
-    box(plotOutput("distPlot"),width = 8),
+    box(plotOutput("distPlot")
+        ,width = 8),
     box(title = "Box title"
         , solidHeader = TRUE
         , background = color.background.box
@@ -66,21 +67,45 @@ print.tab.Stats.col2<-function(){
       , solidHeader = TRUE
       ,status = "primary"
       ,sliderInput("bins", "Number of observations:", 1, 100, 50)
-      ,selectInput("dimension", label = label.nbr.dim, 
-                   choices = get.choices.dimensions(), 
-                   selected = 1),
-        print.select.input.based.dim(column(3, verbatimTextOutput("dimension")))
+      ,print.selector.unique.val("dimension","radioButtons",label.nbr.dim,"get.choices.dimensions")
+      ,dyn.print.selectors.1()
+      #uiOutput("dimensions.selectors.1"),
+      ,uiOutput("dimensions.selectors.2")
+      
   )
   )
+}
+print.selector.unique.val<-function(valName,Type,labelVal,functionName){
+  FUN <- match.fun(functionName) 
+  switch(Type,
+         "SelectInput"= selectInput(valName, label = labelVal, 
+              choices = FUN()
+             ,selected = 1)
+        ,"radioButtons" = radioButtons(valName, label = labelVal,
+                                       choices = FUN(),
+                                       selected = 1)
+        )
+}
+print.select.input.based.dim<-function(dimSelected){
+  dimSelected
+}
+print.dimension.selector<-function(valSelect.dim
+                                         ,variableName
+                                         ,labelValue){
+  listNames<-names(data)
+  if(is.null(valSelect.dim)){
+    cat("\n Esta nulo la variable ",variableName)
+  }else{
+    cat("\n La variable ",variableName, " es igual a : ",valSelect.dim)
+    listNames<-listNames[!listNames %in% list(valSelect.dim)]
+  }
+  
+  selectInput(variableName
+              ,label = labelValue#label.choose.first.dim, 
+              ,choices = listNames
+              )
 }
 
-print.select.input.based.dim<-function(dimSelected){
-  
-  selectInput("dimension.1", 
-              label = label.choose.first.dim, 
-              choices = names(data), 
-              selected = 1)
-}
 
 get.data.frm.csv<-function(fileName){
   cat(fileName)
